@@ -65,7 +65,7 @@ def loadradar():
 
 def GetBlockCategories():
 
-    print('Attempting to export block categories info from RADAR')
+    print('Gathering block categories and subcategories from RADAR')
     get_block_categories_url = radarendpointurl + '/gate/content-block-service/v1/rules/simple-view?customerId=' + childaccountid
     # print radartoken
     authdheaders = {'Accept': 'application/json, text/javascript, */*; q=0.01', 'Content-Type': 'application/json',
@@ -82,6 +82,8 @@ def GetBlockCategories():
     for i in responsejson:
         categoriesDict[i['id']] = i['categoryName']
         displayNameDict[i['id']] = i['displayName']
+    
+    print('Categories obtained')
 
 
 def GetBlockPolicy():
@@ -109,7 +111,7 @@ def GetBlockPolicy():
         row = [categoriesDict.get(str(i['id'])), displayNameDict.get(str(i['id'])), i['actions'], i['inheritedActions']]
         writer.writerow(row)
 
-    print('CSV Export completed')
+    print('Block Policy CSV Export completed')
 
 if __name__ == "__main__":
     loadradar()
